@@ -1,5 +1,3 @@
-# yii2-image-toolkit
-=======
 ImageToolkit
 ============
 Used for image resize, crop and other common transformations
@@ -30,4 +28,4 @@ Usage
 Once the extension is installed, simply use it in your code by  :
 
 ```php
-<?= \ImageToolkit\AutoloadExample::widget(); ?>
+<?= \ImageToolkit\ImageToolkit::widget(); ?>```
