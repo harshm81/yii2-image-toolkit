@@ -1,7 +1,7 @@
 {
-    "name": "image-toolkit/image-toolkit",
+    "name": "yii2-image-toolkit/src",
     "description": "Used for image resize, crop and other common transformations",
-    "type": "yii2-extension",
+    "type": "library",
     "keywords": ["yii2","extension"],
     "license": "Apache-2.0",
     "authors": [

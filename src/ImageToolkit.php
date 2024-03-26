@@ -1,13 +1,18 @@
 <?php
 
+<<<<<<< HEAD
 namespace app\widgets\ImageToolkit;
 
 use yii\base\Widget;
 use yii\base\InvalidArgumentException;
+=======
+namespace ImageToolkit;
+>>>>>>> 13c2969 (Directory Structure change)
 
 /**
  * This is just an example.
  */
+<<<<<<< HEAD
 class ImageToolkit extends Widget
 {
     public $url; // Custom property
@@ -24,5 +29,12 @@ class ImageToolkit extends Widget
     public function run()
     {
         p($this->url);
+=======
+class ImageToolkit extends \yii\base\Widget
+{
+    public function run()
+    {
+        return "Hello!";
+>>>>>>> 13c2969 (Directory Structure change)
     }
 }
