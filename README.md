@@ -10,7 +10,7 @@ The preferred way to install this extension is through [composer](http://getcomp
 Either run
 
 ```
-php composer.phar require --prefer-dist image-toolkit/yii2-image-toolkit "*"
+php composer.phar require --prefer-dist image-toolkit/image-toolkit:dev-main "*"
 ```
 
 or add
@@ -28,4 +28,4 @@ Usage
 Once the extension is installed, simply use it in your code by  :
 
 ```php
-<?= \ImageToolkit\AutoloadExample::widget(); ?>```
+<?= \ImageToolkit\ImageToolkit::widget(); ?>```
