@@ -2,8 +2,8 @@
 
 namespace ImageToolkit;
 
-use yii\base\InvalidArgumentException;
 use yii\base\Widget;
+use yii\base\InvalidArgumentException;
 
 /**
  * This is just an example.
