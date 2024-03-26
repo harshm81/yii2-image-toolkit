@@ -1,0 +1,21 @@
+{
+    "name": "image-toolkit/yii2-image-toolkit",
+    "description": "Used for image resize, crop and other common transformations",
+    "type": "yii2-extension",
+    "keywords": ["yii2","extension"],
+    "license": "Apache-2.0",
+    "authors": [
+        {
+            "name": "Harsh",
+            "email": "harshm.encodedots@gmail.com"
+        }
+    ],
+    "require": {
+        "yiisoft/yii2": "~2.0.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "ImageToolkit\\": ""
+        }
+    }
+}
