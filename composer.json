@@ -1,5 +1,5 @@
 {
-    "name": "image-toolkit/yii2-image-toolkit",
+    "name": "image-toolkit/image-toolkit",
     "description": "Used for image resize, crop and other common transformations",
     "type": "yii2-extension",
     "keywords": ["yii2","extension"],
