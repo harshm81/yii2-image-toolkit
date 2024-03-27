@@ -680,10 +680,13 @@ class ImageToolkit extends Widget
                 case 'jpg':
                 case 'jpeg':
                     $fileExtension = 'jpg';
+                    break;
                 case 'png':
                     $fileExtension = 'png';
+                    break;
                 case 'webp':
                     $fileExtension = 'webp';
+                    break;
             }
         } else {
             // Remove query string
@@ -693,10 +696,13 @@ class ImageToolkit extends Widget
             switch ($imageType) {
                 case IMAGETYPE_JPEG:
                     $fileExtension = 'jpg';
+                    break;
                 case IMAGETYPE_PNG:
                     $fileExtension = 'png';
+                    break;
                 case IMAGETYPE_WEBP:
                     $fileExtension = 'webp';
+                    break;
             }
         }
 
