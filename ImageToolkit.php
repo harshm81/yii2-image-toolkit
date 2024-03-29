@@ -19,19 +19,19 @@ class ImageToolkit extends Widget
      * Custom properties
      */
     public $url;
-    private $targetW = null;
-    private $targetH = null;
-    private $aspectRatio = null;
-    private $cropMode = null;
-    private $backgroundColor = 'F3F3F3';
-    private $isIgnoreAspectRatio = false;
-    private $focusForPadding = ''; // Set the desired padding side (either 'left', 'right', 'top', or 'bottom')
-    private $cropStrategy = ''; // Set the desired value (either 'force', 'at_max', 'at_max_enlarge' or 'at_least')
-    private $quality = 90; // Default quality
-    private $validFormats = ['auto', 'jpg', 'png', 'webp', 'avif', 'jpeg'];
-    private $format = 'auto';
-    private $newTargetW = null;
-    private $newTargetH = null;
+    public $targetW = null;
+    public $targetH = null;
+    public $aspectRatio = null;
+    public $cropMode = null;
+    public $backgroundColor = 'F3F3F3';
+    public $isIgnoreAspectRatio = false;
+    public $focusForPadding = ''; // Set the desired padding side (either 'left', 'right', 'top', or 'bottom')
+    public $cropStrategy = ''; // Set the desired value (either 'force', 'at_max', 'at_max_enlarge' or 'at_least')
+    public $quality = 90; // Default quality
+    public $validFormats = ['auto', 'jpg', 'png', 'webp', 'avif', 'jpeg'];
+    public $format = 'auto';
+    public $newTargetW = null;
+    public $newTargetH = null;
 
     public function init()
     {
@@ -205,7 +205,7 @@ class ImageToolkit extends Widget
      * Output svg image
      * @throws NotFoundHttpException
      */
-    private function outputSvgImage()
+    public function outputSvgImage()
     {
         try {
             // Remove transformation string
@@ -228,7 +228,7 @@ class ImageToolkit extends Widget
      * Output gif image
      * @throws NotFoundHttpException
      */
-    private function outputGifImage()
+    public function outputGifImage()
     {
         try {
             // Remove transformation string
@@ -247,7 +247,7 @@ class ImageToolkit extends Widget
      * @throws BadRequestHttpException
      * @throws NotFoundHttpException
      */
-    private function processImageUrl()
+    public function processImageUrl()
     {
         // Remove query string
         $newUrl = Helper::removeQueryStringFromUrl($this->url);
@@ -382,7 +382,7 @@ class ImageToolkit extends Widget
      * @param int $height The height of the canvas.
      * @return resource|bool Returns the created image resource or false on failure.
      */
-    private function createCanvas($width, $height)
+    public function createCanvas($width, $height)
     {
         return imagecreatetruecolor($width, $height);
     }
@@ -401,7 +401,7 @@ class ImageToolkit extends Widget
      * @param int $destinationX The starting X coordinate in the destination image.
      * @param int $destinationY The starting Y coordinate in the destination image.
      */
-    private function resizeAndCopyImage($sourceImage, $destinationImage, $sourceWidth, $sourceHeight, $destinationWidth, $destinationHeight, $sourceX, $sourceY, $destinationX = 0, $destinationY = 0)
+    public function resizeAndCopyImage($sourceImage, $destinationImage, $sourceWidth, $sourceHeight, $destinationWidth, $destinationHeight, $sourceX, $sourceY, $destinationX = 0, $destinationY = 0)
     {
         imagecopyresampled($destinationImage, $sourceImage, $destinationX, $destinationY, $sourceX, $sourceY, $destinationWidth, $destinationHeight, $sourceWidth, $sourceHeight);
     }
@@ -438,7 +438,7 @@ class ImageToolkit extends Widget
      * @param $targetHeight
      * @return bool|resource
      */
-    private function processImageByForceCropStrategy($sourceImage, $sourceWidth, $sourceHeight, $targetWidth, $targetHeight)
+    public function processImageByForceCropStrategy($sourceImage, $sourceWidth, $sourceHeight, $targetWidth, $targetHeight)
     {
         // Create a new canvas with desired dimensions
         $destinationImage = $this->createCanvas($targetWidth, $targetHeight);
@@ -458,7 +458,7 @@ class ImageToolkit extends Widget
      * @param $sourceHeight
      * @return bool|resource
      */
-    private function processImageByAtMaxCropStrategy($sourceImage, $sourceWidth, $sourceHeight)
+    public function processImageByAtMaxCropStrategy($sourceImage, $sourceWidth, $sourceHeight)
     {
         // Calculate aspect ratio
         $aspectRatioForCrop = $sourceWidth / $sourceHeight;
@@ -507,7 +507,7 @@ class ImageToolkit extends Widget
      * @param $targetHeight
      * @return bool|resource
      */
-    private function processImageByAtMaxEnlargeCropStrategy($sourceImage, $sourceWidth, $sourceHeight, $targetWidth, $targetHeight)
+    public function processImageByAtMaxEnlargeCropStrategy($sourceImage, $sourceWidth, $sourceHeight, $targetWidth, $targetHeight)
     {
         // Calculate aspect ratio
         $aspectRatioForCrop = $sourceWidth / $sourceHeight;
@@ -556,7 +556,7 @@ class ImageToolkit extends Widget
      * @param $targetHeight
      * @return bool|resource
      */
-    private function processImageByAtLeastCropStrategy($sourceImage, $sourceWidth, $sourceHeight, $targetWidth, $targetHeight)
+    public function processImageByAtLeastCropStrategy($sourceImage, $sourceWidth, $sourceHeight, $targetWidth, $targetHeight)
     {
         // Calculate aspect ratio
         $aspectRatioForCrop = $sourceWidth / $sourceHeight;
@@ -606,7 +606,7 @@ class ImageToolkit extends Widget
      * @param $targetHeight
      * @return bool|resource
      */
-    private function processImageByCropMode($sourceImage, $sourceWidth, $sourceHeight, $targetWidth, $targetHeight)
+    public function processImageByCropMode($sourceImage, $sourceWidth, $sourceHeight, $targetWidth, $targetHeight)
     {
         // Calculate aspect ratio
         $aspectRatioForPadding = $sourceWidth / $sourceHeight;
@@ -664,7 +664,7 @@ class ImageToolkit extends Widget
      * Determine the file extension based on the selected format or the current image format.
      * @return string The file extension determined based on the selected format or the current image format.
      */
-    private function determineFileExtension()
+    public function determineFileExtension()
     {
         $fileExtension = 'jpg'; // Default to JPEG if image type is unknown
         if (!empty($this->format)) {
@@ -705,7 +705,7 @@ class ImageToolkit extends Widget
      * Output image to browser based on the specified format or auto-select based on browser support and image content.
      * @param resource $out The image resource.
      */
-    private function outputImage($out)
+    public function outputImage($out)
     {
         // Remove query string
         $newUrl = Helper::removeTransformationStringFromUrl($this->url);
