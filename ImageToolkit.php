@@ -74,7 +74,7 @@ class ImageToolkit extends Widget
                 if (strpos($headers[$keys[0]], 'Content-Type:') !== false) {
                     $contentType = trim(str_replace('Content-Type:', '', $headers[$keys[0]]));
                     // Check if content type is an image
-                    if (!empty($contentType) && preg_match('/^image\/(svg\+xml|gif|jpe?g|png|webp)/i', $contentType)) {
+                    if (!empty($contentType) && preg_match('/^image\/(svg\+xml|svg|gif|jpe?g|png|webp)/i', $contentType)) {
                         return true; // Image exists
                     }
                 }
@@ -147,17 +147,6 @@ class ImageToolkit extends Widget
             }
         }
 
-
-//        p($this->targetW, 0);
-//        p($this->targetH, 0);
-//        p($this->aspectRatio, 0);
-//        p($this->cropMode, 0);
-//        p($this->backgroundColor, 0);
-//        p($this->focusForPadding, 0);
-//        p($this->cropStrategy, 0);
-//        p($this->quality, 0);
-//        p($this->format);
-
         $this->setTargetDimensions();
     }
 
@@ -214,12 +203,14 @@ class ImageToolkit extends Widget
 
     /**
      * Output svg image
-     * @param $newUrl
      * @throws NotFoundHttpException
      */
-    private function outputSvgImage($newUrl)
+    private function outputSvgImage()
     {
         try {
+            // Remove transformation string
+            $newUrl = Helper::removeTransformationStringFromUrl($this->url);
+
             $svgContent = @file_get_contents($newUrl);
             if ($svgContent === false) {
                 throw new NotFoundHttpException('Failed to load SVG image.');
@@ -235,12 +226,14 @@ class ImageToolkit extends Widget
 
     /**
      * Output gif image
-     * @param $newUrl
      * @throws NotFoundHttpException
      */
-    private function outputGifImage($newUrl)
+    private function outputGifImage()
     {
         try {
+            // Remove transformation string
+            $newUrl = Helper::removeTransformationStringFromUrl($this->url);
+
             header('Content-Type: image/gif');
             readfile($newUrl);
             exit;
@@ -263,11 +256,11 @@ class ImageToolkit extends Widget
         switch (true) {
             case(!empty($imageExtension) && strtolower($imageExtension) === 'svg'): // Check if the image is an SVG by checking the file extension
                 // Output SVG directly
-                $this->outputSvgImage($newUrl);
+                $this->outputSvgImage();
                 break;
             case(!empty($imageExtension) && strtolower($imageExtension) === 'gif'): // Check if the image is a GIF by checking the file extension
                 // Output the GIF image directly
-                $this->outputGifImage($newUrl);
+                $this->outputGifImage();
                 break;
             default:
                 // Remove query string
@@ -310,7 +303,6 @@ class ImageToolkit extends Widget
                     imagedestroy($in);
                     exit;
                 }
-
 
                 switch (true) {
                     case(!empty($this->cropStrategy) && $this->cropStrategy == 'force' && $this->targetW !== null && $this->targetH !== null):
