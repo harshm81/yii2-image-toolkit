@@ -716,7 +716,10 @@ class ImageToolkit extends Widget
                 imagejpeg($out, null, $this->quality);
                 break;
             case 'png':
-                imagepng($out, null, 9 - round($this->quality / 9 * 9));
+                if (!empty($this->quality)) {
+                    $this->quality = (9 - round($this->quality / 9 * 9));
+                }
+                imagepng($out, null, $this->quality);
                 break;
             case 'webp':
                 imagewebp($out, null, $this->quality);
