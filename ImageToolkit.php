@@ -413,7 +413,7 @@ class ImageToolkit extends Widget
      * @param string $hexColor The hexadecimal color code (e.g., "#RRGGBB") of the background color.
      * @return bool True on success, false on failure.
      */
-    private function fillBackgroundColor($canvas, $hexColor)
+    public function fillBackgroundColor($canvas, $hexColor)
     {
         // Convert hexadecimal color code to RGB components
         $red = hexdec(substr($hexColor, 1, 2));
