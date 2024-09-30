@@ -74,7 +74,7 @@ class ImageToolkit extends Widget
                 if (strpos($headers[$keys[0]], 'Content-Type:') !== false) {
                     $contentType = trim(str_replace('Content-Type:', '', $headers[$keys[0]]));
                     // Check if content type is an image
-                    if (!empty($contentType) && preg_match('/^image\/(svg\+xml|svg|gif|jpe?g|png|webp)/i', $contentType)) {
+                    if (!empty($contentType) && !preg_match('/^application\/(pdf|msword|vnd\.openxmlformats-officedocument\.wordprocessingml\.document|vnd\.ms-excel|vnd\.openxmlformats-officedocument\.spreadsheetml\.sheet|vnd\.ms-powerpoint|vnd\.openxmlformats-officedocument\.presentationml\.presentation|zip|rar|csv)/i', $contentType)) { // && preg_match('/^image\/(svg\+xml|svg|gif|jpe?g|png|webp)/i', $contentType)
                         return true; // Image exists
                     }
                 }
@@ -243,6 +243,43 @@ class ImageToolkit extends Widget
     }
 
     /**
+     * Output video
+     * @throws NotFoundHttpException
+     */
+    public function outputVideo()
+    {
+        // Remove transformation string
+        $newUrl = Helper::removeTransformationStringFromUrl($this->url);
+
+        // Get the file extension
+        $extension = strtolower(pathinfo(basename(Helper::removeQueryStringFromUrl($newUrl)), PATHINFO_EXTENSION));
+
+        // Map extensions to their MIME types
+        $mimeTypeMap = [
+            'mp4'  => 'video/mp4',
+            'webm' => 'video/webm',
+            'ogg'  => 'video/ogg',
+            'avi'  => 'video/x-msvideo',
+            'mov'  => 'video/quicktime',
+            'mkv'  => 'video/x-matroska',
+            'flv'  => 'video/x-flv',
+            'wmv'  => 'video/x-ms-wmv'
+        ];
+
+        // Check if the extension is supported
+        if (!array_key_exists($extension, $mimeTypeMap)) {
+            throw new NotFoundHttpException('Unsupported video format.');
+        }
+
+        $mimeType = $mimeTypeMap[$extension];
+
+        // Serve video content with appropriate headers
+        header('Content-Type: ' . $mimeType);
+        readfile($newUrl);
+        exit;
+    }
+
+    /**
      * @return bool
      * @throws BadRequestHttpException
      * @throws NotFoundHttpException
@@ -261,6 +298,9 @@ class ImageToolkit extends Widget
             case(!empty($imageExtension) && strtolower($imageExtension) === 'gif'): // Check if the image is a GIF by checking the file extension
                 // Output the GIF image directly
                 $this->outputGifImage();
+                break;
+            case (!empty($imageExtension) && in_array($imageExtension, ['mp4', 'webm', 'ogg', 'avi', 'mov', 'mkv', 'flv', 'wmv'])): // Check for video types
+                $this->outputVideo();
                 break;
             default:
                 // Remove query string
